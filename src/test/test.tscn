@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://dow64642g1060"]
+
+[ext_resource type="PackedScene" uid="uid://40nlohv2xows" path="res://test/platform.tscn" id="1_syuel"]
+[ext_resource type="PackedScene" uid="uid://c0ftalwl0fy3s" path="res://player/player.tscn" id="2_8a8pi"]
+
+[node name="Test" type="Node2D"]
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="Platform" parent="Platforms" instance=ExtResource("1_syuel")]
+position = Vector2(169, 238)
+
+[node name="Platform2" parent="Platforms" instance=ExtResource("1_syuel")]
+position = Vector2(378, 402)
+
+[node name="Platform3" parent="Platforms" instance=ExtResource("1_syuel")]
+position = Vector2(164, 562)
+
+[node name="Platform4" parent="Platforms" instance=ExtResource("1_syuel")]
+position = Vector2(605, 567)
+
+[node name="Platform5" parent="Platforms" instance=ExtResource("1_syuel")]
+position = Vector2(698, 307)
+
+[node name="Platform6" parent="Platforms" instance=ExtResource("1_syuel")]
+position = Vector2(707, 567)
+
+[node name="Platform7" parent="Platforms" instance=ExtResource("1_syuel")]
+position = Vector2(809, 568)
+
+[node name="Platform8" parent="Platforms" instance=ExtResource("1_syuel")]
+position = Vector2(910, 568)
+
+[node name="Platform9" parent="Platforms" instance=ExtResource("1_syuel")]
+position = Vector2(994, 466)
+
+[node name="Platform10" parent="Platforms" instance=ExtResource("1_syuel")]
+position = Vector2(1116, 363)
+
+[node name="Platform11" parent="Platforms" instance=ExtResource("1_syuel")]
+position = Vector2(891, 266)
+
+[node name="Platform12" parent="Platforms" instance=ExtResource("1_syuel")]
+position = Vector2(503, 206)
+
+[node name="Player" parent="." instance=ExtResource("2_8a8pi")]
+position = Vector2(168, 101)
