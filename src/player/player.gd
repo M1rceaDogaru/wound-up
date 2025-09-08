@@ -16,6 +16,13 @@ extends CharacterBody2D
 @export var sprint_depletion_multiplier: float = 2.5
 @export var damage_depletion_amount: float = 25.0
 
+# Rewind system Properties
+@export var rewind_cooldown := 2.0
+var can_rewind := true
+var rewind_timer := 0.0
+var rewind_frames: Array[RewindFrame] = []
+var current_rewind_index := 0
+
 # Get the gravity from the project settings so you can sync with rigid body nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -32,6 +39,7 @@ var has_jump_buffer: bool = false
 # Node References
 @onready var coyote_timer = $CoyoteTimer
 @onready var jump_buffer_timer = $JumpBufferTimer
+@onready var sprite = $Sprite2D
 
 func _ready():
 	spring_tension = max_spring_tension
@@ -39,8 +47,19 @@ func _ready():
 	coyote_timer.wait_time = coyote_time
 	jump_buffer_timer.connect("timeout", _on_jump_buffer_timer_timeout)
 	jump_buffer_timer.wait_time = jump_buffer_time
+	
+	RewindSystem.rewind_started.connect(_on_rewind_started)
+	RewindSystem.rewind_ended.connect(_on_rewind_ended)
 
 func _physics_process(delta):
+	if RewindSystem.is_rewinding:
+		handle_rewind(delta)
+	else:
+		handle_normal_movement(delta)
+		store_rewind_frame()
+		update_rewind_cooldown(delta)
+	
+func handle_normal_movement(delta):
 	# --- SPRING TENSION MANAGEMENT ---
 	# Calculate base depletion rate
 	var current_depletion_rate = spring_depletion_rate
@@ -82,9 +101,9 @@ func _physics_process(delta):
 	was_on_floor = is_on_floor()
 	move_and_slide()
 	
-	# --- DEBUG / UI UPDATE ---
-	# This will be replaced by a proper UI signal later
-	#print("Spring Tension: ", spring_tension)
+	# Handle rewind input
+	if Input.is_action_just_pressed("rewind") and can_rewind:
+		start_rewind()
 
 func handle_jump_input():
 	# Jump Buffer: If the player presses jump, start the buffer timer
@@ -143,6 +162,66 @@ func game_over(reason: String):
 	print("Game Over: ", reason)
 	# This will be replaced by a game over screen restart
 	get_tree().reload_current_scene()
+	
+# --- TIME REWIND LOGIC ---
+func store_rewind_frame():
+	var frame = RewindFrame.new(
+		global_position,
+		velocity,
+		sprite.flip_h
+	)
+	
+	rewind_frames.push_front(frame)
+	
+	# Limit the number of stored frames
+	if rewind_frames.size() > RewindSystem.max_records:
+		rewind_frames.pop_back()
+
+func handle_rewind(delta):
+	if rewind_frames.size() > 0:
+		# Get the next frame in rewind sequence
+		var rewind_frame = rewind_frames[0]
+		
+		# Apply rewind data
+		global_position = rewind_frame.position
+		velocity = rewind_frame.velocity
+		sprite.flip_h = rewind_frame.sprite_flip
+		
+		# Remove this frame from the rewind buffer
+		rewind_frames.pop_front()
+	else:
+		# No more frames to rewind, stop rewinding
+		stop_rewind()
+		
+func start_rewind():
+	if can_rewind and rewind_frames.size() > 0:
+		RewindSystem.start_rewind()
+		can_rewind = false
+		rewind_timer = rewind_cooldown
+
+func stop_rewind():
+	RewindSystem.stop_rewind()
+
+func update_rewind_cooldown(delta):
+	if not can_rewind:
+		rewind_timer -= delta
+		if rewind_timer <= 0:
+			can_rewind = true
+
+func _on_rewind_started():
+	# Optional: Add visual/audio effects
+	modulate = Color(0.5, 0.8, 1.0)  # Blue tint during rewind
+	Engine.time_scale = 0.5  # Slow motion effect during rewind
+
+func _on_rewind_ended():
+	# Restore normal appearance
+	modulate = Color.WHITE
+	Engine.time_scale = 1.0
+
+# Clean up when character is removed
+func _exit_tree():
+	if RewindSystem.is_rewinding:
+		RewindSystem.stop_rewind()
 
 # --- TIMER SIGNAL CALLBACKS ---
 func _on_coyote_timer_timeout():
