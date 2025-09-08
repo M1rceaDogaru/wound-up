@@ -40,6 +40,7 @@ var has_jump_buffer: bool = false
 @onready var coyote_timer = $CoyoteTimer
 @onready var jump_buffer_timer = $JumpBufferTimer
 @onready var sprite = $Sprite2D
+@onready var tension_label = $TensionLabel
 
 func _ready():
 	spring_tension = max_spring_tension
@@ -52,6 +53,7 @@ func _ready():
 	RewindSystem.rewind_ended.connect(_on_rewind_ended)
 
 func _physics_process(delta):
+	tension_label.text = str(int(spring_tension))
 	if RewindSystem.is_rewinding:
 		handle_rewind(delta)
 	else:
@@ -168,7 +170,8 @@ func store_rewind_frame():
 	var frame = RewindFrame.new(
 		global_position,
 		velocity,
-		sprite.flip_h
+		sprite.flip_h,
+		spring_tension
 	)
 	
 	rewind_frames.push_front(frame)
@@ -186,6 +189,7 @@ func handle_rewind(delta):
 		global_position = rewind_frame.position
 		velocity = rewind_frame.velocity
 		sprite.flip_h = rewind_frame.sprite_flip
+		spring_tension = rewind_frame.spring_tension
 		
 		# Remove this frame from the rewind buffer
 		rewind_frames.pop_front()
