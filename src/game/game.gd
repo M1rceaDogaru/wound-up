@@ -12,4 +12,4 @@ func move_to(target: String, transition_name: String):
 	add_child(new_map)
 	
 	var target_transition: Transition = new_map.find_child("Transitions").find_child(transition_name)
-	player.global_position = target_transition.entry_point.global_position
+	player.transition_to(target_transition.entry_point.global_position)

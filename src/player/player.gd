@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+@export_group("Movement")
 # Movement Properties
 @export var max_speed: float = 240.0
 @export var acceleration: float = 1800.0
@@ -10,6 +11,9 @@ extends CharacterBody2D
 @export var coyote_time: float = 0.1
 @export var jump_buffer_time: float = 0.1
 
+@export var gravity_multiplier: float = 3
+
+@export_group("Damage and health")
 # Spring Tension Properties
 @export var max_spring_tension: float = 100.0
 @export var spring_depletion_rate: float = 5.0 # Tension lost per second
@@ -141,7 +145,7 @@ func handle_movement(horizontal_input, delta):
 
 func apply_gravity(delta):
 	if not is_on_floor():
-		velocity.y += gravity * delta
+		velocity.y += gravity * gravity_multiplier * delta
 
 func perform_jump():
 	velocity.y = jump_velocity
@@ -181,7 +185,14 @@ func store_rewind_frame():
 		rewind_frames.pop_back()
 
 func handle_rewind(delta):
+	if Input.is_action_just_released("rewind"):
+		stop_rewind()
+		return
+
 	if rewind_frames.size() > 0:
+		# Only rewind if user presses left
+		if not Input.is_action_pressed("move_left"):
+			return
 		# Get the next frame in rewind sequence
 		var rewind_frame = rewind_frames[0]
 		
@@ -221,6 +232,10 @@ func _on_rewind_ended():
 	# Restore normal appearance
 	modulate = Color.WHITE
 	Engine.time_scale = 1.0
+	
+func transition_to(position: Vector2):
+	rewind_frames.clear()
+	global_position = position
 
 # Clean up when character is removed
 func _exit_tree():
