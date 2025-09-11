@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bv1v81aa2q4gw"]
+
+[node name="Map" type="Node2D"]
+
+[node name="Transitions" type="Node2D" parent="."]
+
+[node name="Environment" type="Node2D" parent="."]

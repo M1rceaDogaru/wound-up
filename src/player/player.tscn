@@ -7,16 +7,18 @@
 radius = 29.0
 height = 142.0
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_rkbax")
+max_speed = 500.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -88.5)
 texture = ExtResource("1_oul6g")
 region_enabled = true
 region_rect = Rect2(185.634, 243.82, 138.546, 183.621)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 17)
+position = Vector2(0, -71.5)
 shape = SubResource("CapsuleShape2D_rkbax")
 
 [node name="CoyoteTimer" type="Timer" parent="."]

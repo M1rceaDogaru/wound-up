@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dxvpd37mhwkjm"]
+
+[ext_resource type="PackedScene" uid="uid://bv1v81aa2q4gw" path="res://map/map.tscn" id="1_txpt3"]
+[ext_resource type="PackedScene" uid="uid://bin6wnaw5ta86" path="res://map/transition.tscn" id="2_u2sb3"]
+[ext_resource type="PackedScene" uid="uid://40nlohv2xows" path="res://test/platform.tscn" id="3_mjb1c"]
+
+[node name="Map" instance=ExtResource("1_txpt3")]
+
+[node name="FromStartToTunnel" parent="Transitions" index="0" instance=ExtResource("2_u2sb3")]
+position = Vector2(1109, 566)
+target_location = "tunnel"
+
+[node name="Platform" parent="Environment" index="0" instance=ExtResource("3_mjb1c")]
+position = Vector2(426, 598)
+
+[node name="Platform2" parent="Environment" index="1" instance=ExtResource("3_mjb1c")]
+position = Vector2(525, 598)
+
+[node name="Platform3" parent="Environment" index="2" instance=ExtResource("3_mjb1c")]
+position = Vector2(627, 598)
+
+[node name="Platform4" parent="Environment" index="3" instance=ExtResource("3_mjb1c")]
+position = Vector2(728, 598)
+
+[node name="Platform5" parent="Environment" index="4" instance=ExtResource("3_mjb1c")]
+position = Vector2(995, 585)
+scale = Vector2(2.6, 1)

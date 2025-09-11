@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://cidhne4h2q7wj"]
+
+[ext_resource type="PackedScene" uid="uid://bv1v81aa2q4gw" path="res://map/map.tscn" id="1_hjm4x"]
+[ext_resource type="PackedScene" uid="uid://bin6wnaw5ta86" path="res://map/transition.tscn" id="2_rfm4c"]
+[ext_resource type="PackedScene" uid="uid://40nlohv2xows" path="res://test/platform.tscn" id="4_y3lgk"]
+
+[node name="Map" instance=ExtResource("1_hjm4x")]
+
+[node name="FromStartToTunnel" parent="Transitions" index="0" instance=ExtResource("2_rfm4c")]
+position = Vector2(9, 172)
+target_location = "start"
+entry = 1
+
+[node name="Platform" parent="Environment" index="0" instance=ExtResource("4_y3lgk")]
+position = Vector2(321, 190)
+scale = Vector2(6.64, 1)
