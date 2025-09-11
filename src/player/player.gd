@@ -233,9 +233,9 @@ func _on_rewind_ended():
 	modulate = Color.WHITE
 	Engine.time_scale = 1.0
 	
-func transition_to(position: Vector2):
+func transition_to(new_position: Vector2):
 	rewind_frames.clear()
-	global_position = position
+	global_position = new_position
 
 # Clean up when character is removed
 func _exit_tree():

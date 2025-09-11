@@ -1,10 +1,73 @@
-[gd_scene load_steps=4 format=3 uid="uid://cidhne4h2q7wj"]
+[gd_scene load_steps=8 format=3 uid="uid://cidhne4h2q7wj"]
 
 [ext_resource type="PackedScene" uid="uid://bv1v81aa2q4gw" path="res://map/map.tscn" id="1_hjm4x"]
 [ext_resource type="PackedScene" uid="uid://bin6wnaw5ta86" path="res://map/transition.tscn" id="2_rfm4c"]
+[ext_resource type="PackedScene" uid="uid://ccv662yvydwpx" path="res://map/moving_platform.tscn" id="4_hjm4x"]
 [ext_resource type="PackedScene" uid="uid://40nlohv2xows" path="res://test/platform.tscn" id="4_y3lgk"]
 
+[sub_resource type="Animation" id="Animation_rfm4c"]
+resource_name = "move"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MovingPlatforms/MovingPlatform:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.99),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(918, 366), Vector2(176, 366)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MovingPlatforms/MovingPlatform2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.99),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(216, 517), Vector2(918, 517)]
+}
+
+[sub_resource type="Animation" id="Animation_8axep"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MovingPlatforms/MovingPlatform:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(918, 366)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MovingPlatforms/MovingPlatform2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(216, 517)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y3lgk"]
+_data = {
+&"RESET": SubResource("Animation_8axep"),
+&"move": SubResource("Animation_rfm4c")
+}
+
 [node name="Map" instance=ExtResource("1_hjm4x")]
+script = null
 
 [node name="FromStartToTunnel" parent="Transitions" index="0" instance=ExtResource("2_rfm4c")]
 position = Vector2(9, 172)
@@ -14,3 +77,14 @@ entry = 1
 [node name="Platform" parent="Environment" index="0" instance=ExtResource("4_y3lgk")]
 position = Vector2(321, 190)
 scale = Vector2(6.64, 1)
+
+[node name="MovingPlatform" parent="MovingPlatforms" index="0" instance=ExtResource("4_hjm4x")]
+position = Vector2(918, 366)
+
+[node name="MovingPlatform2" parent="MovingPlatforms" index="1" instance=ExtResource("4_hjm4x")]
+position = Vector2(216, 517)
+
+[node name="PlatformMovement" parent="." index="3"]
+libraries = {
+&"": SubResource("AnimationLibrary_y3lgk")
+}

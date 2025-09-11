@@ -1,7 +1,19 @@
-[gd_scene format=3 uid="uid://bv1v81aa2q4gw"]
+[gd_scene load_steps=2 format=3 uid="uid://bv1v81aa2q4gw"]
+
+[sub_resource type="GDScript" id="GDScript_beun2"]
+script/source = "extends Node2D
+
+func start() -> void:
+	$PlatformMovement.play(\"move\")
+"
 
 [node name="Map" type="Node2D"]
+script = SubResource("GDScript_beun2")
 
 [node name="Transitions" type="Node2D" parent="."]
 
 [node name="Environment" type="Node2D" parent="."]
+
+[node name="MovingPlatforms" type="Node2D" parent="."]
+
+[node name="PlatformMovement" type="AnimationPlayer" parent="."]

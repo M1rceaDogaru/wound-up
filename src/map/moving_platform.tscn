@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://ccv662yvydwpx"]
+
+[ext_resource type="Texture2D" uid="uid://b5fwa30o13utx" path="res://sprites/test_robot.png" id="1_hlou7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u6vgn"]
+size = Vector2(98, 35)
+
+[node name="MovingPlatform" type="AnimatableBody2D"]
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_hlou7")
+region_enabled = true
+region_rect = Rect2(51.4613, 583.537, 97.3493, 39.3066)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_u6vgn")
