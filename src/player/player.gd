@@ -17,7 +17,6 @@ extends CharacterBody2D
 # Spring Tension Properties
 @export var max_spring_tension: float = 100.0
 @export var spring_depletion_rate: float = 5.0 # Tension lost per second
-@export var sprint_depletion_multiplier: float = 2.5
 @export var damage_depletion_amount: float = 25.0
 
 # Rewind system Properties
@@ -32,7 +31,6 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 # State Variables
 var spring_tension: float
-var is_sprinting: bool = false
 var is_overwound: bool = false
 var was_on_floor: bool = false
 
@@ -69,8 +67,6 @@ func handle_normal_movement(delta):
 	# --- SPRING TENSION MANAGEMENT ---
 	# Calculate base depletion rate
 	var current_depletion_rate = spring_depletion_rate
-	if is_sprinting:
-		current_depletion_rate *= sprint_depletion_multiplier
 	if is_overwound:
 		current_depletion_rate *= 5.0 # Example multiplier for overwound state
 	
@@ -124,13 +120,9 @@ func handle_jump_input():
 		jump_buffer_timer.stop()
 
 func handle_movement(horizontal_input, delta):
-	is_sprinting = Input.is_action_pressed("sprint")
-	
 	if horizontal_input != 0:
-		# Apply acceleration, respecting the sprint input
+		# Apply acceleration
 		var target_speed = horizontal_input * max_speed
-		if is_sprinting and spring_tension > 0:
-			target_speed *= 1.6 # Sprint speed multiplier
 		
 		velocity.x = move_toward(velocity.x, target_speed, acceleration * delta)
 		

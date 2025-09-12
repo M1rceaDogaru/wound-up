@@ -9,9 +9,9 @@ height = 142.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_rkbax")
-max_speed = 400.0
+max_speed = 500.0
 acceleration = 3000.0
-jump_velocity = -800.0
+jump_velocity = -1000.0
 coyote_time = 0.2
 jump_buffer_time = 0.2
 
