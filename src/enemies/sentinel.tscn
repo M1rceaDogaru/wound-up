@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dcrah5vg0thhx"]
+
+[ext_resource type="Texture2D" uid="uid://doxklijk78dyj" path="res://sprites/test_sentinel.png" id="1_o46ac"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lekct"]
+radius = 164.012
+
+[node name="Sentinel" type="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-2, -254)
+texture = ExtResource("1_o46ac")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -166)
+shape = SubResource("CircleShape2D_lekct")

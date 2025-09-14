@@ -5,34 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://ccv662yvydwpx" path="res://map/moving_platform.tscn" id="4_hjm4x"]
 [ext_resource type="PackedScene" uid="uid://40nlohv2xows" path="res://test/platform.tscn" id="4_y3lgk"]
 
-[sub_resource type="Animation" id="Animation_rfm4c"]
-resource_name = "move"
-loop_mode = 2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("MovingPlatforms/MovingPlatform:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.99),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(918, 366), Vector2(176, 366)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("MovingPlatforms/MovingPlatform2:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.99),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(216, 517), Vector2(918, 517)]
-}
-
 [sub_resource type="Animation" id="Animation_8axep"]
 length = 0.001
 tracks/0/type = "value"
@@ -59,6 +31,59 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(216, 517)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MovingPlatforms/MovingPlatform3:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1039, 200)]
+}
+
+[sub_resource type="Animation" id="Animation_rfm4c"]
+resource_name = "move"
+length = 2.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MovingPlatforms/MovingPlatform:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.96667),
+"transitions": PackedFloat32Array(1, 0.217637),
+"update": 0,
+"values": [Vector2(918, 366), Vector2(176, 366)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MovingPlatforms/MovingPlatform2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.96667),
+"transitions": PackedFloat32Array(1, 0.217637),
+"update": 0,
+"values": [Vector2(216, 517), Vector2(918, 517)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MovingPlatforms/MovingPlatform3:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.966667, 1.95667),
+"transitions": PackedFloat32Array(1, 1, 0.217637),
+"update": 0,
+"values": [Vector2(1039, 200), Vector2(1039, 446), Vector2(617, 446)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_y3lgk"]
 _data = {
@@ -67,7 +92,6 @@ _data = {
 }
 
 [node name="Map" instance=ExtResource("1_hjm4x")]
-script = null
 
 [node name="FromStartToTunnel" parent="Transitions" index="0" instance=ExtResource("2_rfm4c")]
 position = Vector2(9, 172)
@@ -83,6 +107,9 @@ position = Vector2(918, 366)
 
 [node name="MovingPlatform2" parent="MovingPlatforms" index="1" instance=ExtResource("4_hjm4x")]
 position = Vector2(216, 517)
+
+[node name="MovingPlatform3" parent="MovingPlatforms" index="2" instance=ExtResource("4_hjm4x")]
+position = Vector2(1039, 200)
 
 [node name="PlatformMovement" parent="." index="3"]
 libraries = {

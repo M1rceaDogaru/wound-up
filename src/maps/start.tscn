@@ -5,6 +5,21 @@
 [ext_resource type="PackedScene" uid="uid://40nlohv2xows" path="res://test/platform.tscn" id="3_mjb1c"]
 [ext_resource type="PackedScene" uid="uid://ccv662yvydwpx" path="res://map/moving_platform.tscn" id="4_u2sb3"]
 
+[sub_resource type="Animation" id="Animation_mjb1c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MovingPlatforms/MovingPlatform:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(96, 536)]
+}
+
 [sub_resource type="Animation" id="Animation_u2sb3"]
 resource_name = "move"
 length = 2.0
@@ -22,21 +37,6 @@ tracks/0/keys = {
 "values": [Vector2(96, 536), Vector2(357, 536)]
 }
 
-[sub_resource type="Animation" id="Animation_mjb1c"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("MovingPlatforms/MovingPlatform:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(96, 536)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vhhta"]
 _data = {
 &"RESET": SubResource("Animation_mjb1c"),
@@ -48,6 +48,11 @@ _data = {
 [node name="FromStartToTunnel" parent="Transitions" index="0" instance=ExtResource("2_u2sb3")]
 position = Vector2(1109, 566)
 target_location = "tunnel"
+
+[node name="ToSentinel" parent="Transitions" index="1" instance=ExtResource("2_u2sb3")]
+position = Vector2(393, 578)
+target_location = "sentinel"
+entry = 1
 
 [node name="Platform" parent="Environment" index="0" instance=ExtResource("3_mjb1c")]
 position = Vector2(426, 598)

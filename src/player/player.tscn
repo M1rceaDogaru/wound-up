@@ -11,9 +11,10 @@ height = 142.0
 script = ExtResource("1_rkbax")
 max_speed = 500.0
 acceleration = 3000.0
-jump_velocity = -1000.0
+jump_velocity = -1500.0
 coyote_time = 0.2
 jump_buffer_time = 0.2
+max_spring_tension = 300.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -88.5)
