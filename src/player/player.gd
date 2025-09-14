@@ -18,6 +18,7 @@ extends CharacterBody2D
 @export var max_spring_tension: float = 100.0
 @export var spring_depletion_rate: float = 5.0 # Tension lost per second
 @export var damage_depletion_amount: float = 25.0
+@export var overwound_depletion_multiplier: float = 2.0
 
 # Rewind system Properties
 @export var rewind_cooldown := 2.0
@@ -64,21 +65,6 @@ func _physics_process(delta):
 		update_rewind_cooldown(delta)
 	
 func handle_normal_movement(delta):
-	# --- SPRING TENSION MANAGEMENT ---
-	# Calculate base depletion rate
-	var current_depletion_rate = spring_depletion_rate
-	if is_overwound:
-		current_depletion_rate *= 5.0 # Example multiplier for overwound state
-	
-	# Deplete the spring
-	spring_tension -= current_depletion_rate * delta
-	spring_tension = clamp(spring_tension, 0.0, max_spring_tension)
-	
-	# Check for game over
-	if spring_tension <= 0.0:
-		game_over("Spring Unwound!")
-		return
-	
 	# --- MOVEMENT & INPUT HANDLING ---
 	handle_jump_input()
 	var horizontal_input = Input.get_axis("move_left", "move_right")
@@ -96,9 +82,12 @@ func handle_normal_movement(delta):
 		can_coyote_jump = false
 		coyote_timer.stop()
 	
+	var must_jump = has_jump_buffer and (is_on_floor() or can_coyote_jump)
 	# Apply jump if we have a buffered jump and are now able to jump
-	if has_jump_buffer and (is_on_floor() or can_coyote_jump):
+	if must_jump:
 		perform_jump()
+		
+	deplete_spring_tension(delta, horizontal_input, must_jump)
 	
 	was_on_floor = is_on_floor()
 	move_and_slide()
@@ -106,6 +95,26 @@ func handle_normal_movement(delta):
 	# Handle rewind input
 	if Input.is_action_just_pressed("rewind") and can_rewind:
 		start_rewind()
+		
+func deplete_spring_tension(delta, move_input, has_jumped):
+	if has_jumped:
+		spring_tension -= 1
+	
+	if move_input != 0:
+		# --- SPRING TENSION MANAGEMENT ---
+		# Calculate base depletion rate. Only deplete when there is movement input
+		var current_depletion_rate = spring_depletion_rate
+		if is_overwound:
+			current_depletion_rate *= overwound_depletion_multiplier # multiplier for overwound state
+		
+		# Deplete the spring
+		spring_tension -= current_depletion_rate * delta
+		spring_tension = clamp(spring_tension, 0.0, max_spring_tension)
+	
+	# Check for game over
+	if spring_tension <= 0.0:
+		game_over("Spring Unwound!")
+		return
 
 func handle_jump_input():
 	# Jump Buffer: If the player presses jump, start the buffer timer
