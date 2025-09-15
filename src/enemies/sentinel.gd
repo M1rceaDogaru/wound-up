@@ -47,6 +47,7 @@ func _on_stomp_area_body_entered(body):
 			body.bounce_from_stomp(stomp_bounce_force)
 			# Damage the enemy
 			take_damage(body)
+			body.play_hit()
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):

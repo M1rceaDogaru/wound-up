@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://c0ftalwl0fy3s"]
+[gd_scene load_steps=8 format=3 uid="uid://c0ftalwl0fy3s"]
 
 [ext_resource type="Texture2D" uid="uid://b5fwa30o13utx" path="res://sprites/test_robot.png" id="1_oul6g"]
 [ext_resource type="Script" uid="uid://bw4svbxqh3lx6" path="res://player/player.gd" id="1_rkbax"]
+[ext_resource type="AudioStream" uid="uid://c53txct7tc8a1" path="res://audio/crash.mp3" id="3_g1dw6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rkbax"]
 radius = 29.0
@@ -104,5 +105,8 @@ one_shot = true
 libraries = {
 &"": SubResource("AnimationLibrary_yw30f")
 }
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_g1dw6")
 
 [connection signal="timeout" from="InvulnerabilityTimer" to="." method="_on_invulnerability_timer_timeout"]

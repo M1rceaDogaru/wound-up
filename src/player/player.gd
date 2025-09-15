@@ -261,11 +261,13 @@ func handle_rewind(delta):
 		
 func start_rewind():
 	if can_rewind and rewind_frames.size() > 0:
+		get_tree().current_scene.time_rewinding(true)
 		RewindSystem.start_rewind()
 		can_rewind = false
 		rewind_timer = rewind_cooldown
 
 func stop_rewind():
+	get_tree().current_scene.time_rewinding(false)
 	RewindSystem.stop_rewind()
 
 func update_rewind_cooldown(delta):
@@ -290,8 +292,8 @@ func transition_to(new_position: Vector2):
 	camera.global_position = new_position
 	camera.reset_smoothing()
 
-var last_rewind_station_map := ""
-var last_rewind_station_position := Vector2.ZERO
+var last_rewind_station_map := "start"
+var last_rewind_station_position := Vector2(640, 0)
 
 func spring_rewind(location: String, station_position: Vector2, overwind: bool):
 	spring_tension = max_spring_tension
@@ -330,3 +332,7 @@ func _on_invulnerability_timer_timeout() -> void:
 		invulnerability_tween.kill()
 		invulnerability_tween = null
 		is_invulnerable = false
+
+func play_hit():
+	$HitSound.pitch_scale = randf_range(0.8, 1.2)
+	$HitSound.play()

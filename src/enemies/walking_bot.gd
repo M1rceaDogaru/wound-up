@@ -9,10 +9,17 @@ extends Area2D
 
 var invulnerability_tween: Tween
 var is_invulnerable = false
+var last_position := Vector2.ZERO
 
 func _ready():
 	# Connect the area's signal to a function
 	stomp_area.body_entered.connect(_on_stomp_area_body_entered)
+	if $AnimationPlayer:
+		$AnimationPlayer.play("move")
+	
+func _physics_process(delta: float) -> void:
+	sprite.flip_h = last_position.x - global_position.x < 0
+	last_position = global_position
 
 func take_damage(source):
 	if is_invulnerable:
@@ -38,6 +45,7 @@ func _on_stomp_area_body_entered(body):
 			body.bounce_from_stomp(stomp_bounce_force)
 			# Damage the enemy
 			take_damage(body)
+			body.play_hit()
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):

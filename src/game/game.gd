@@ -8,8 +8,10 @@ class_name Game
 
 var music_tween: Tween
 
+var original_pitch: float
+
 func _ready() -> void:
-	pass
+	move_to("start")
 
 func move_to(target: String, transition_name: String = "", new_position: Vector2 = Vector2.ZERO):
 	var current_map = find_child("Map", false, false)
@@ -55,3 +57,7 @@ func reset_music():
 	exploration_music.pitch_scale = 1.0
 	boss_music.stop()
 	exploration_music.play()
+	
+func time_rewinding(value):
+	exploration_music.pitch_scale = 0.5 if value else 1
+	boss_music.pitch_scale = 0.5 if value else 1

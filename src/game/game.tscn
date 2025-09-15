@@ -12,7 +12,7 @@
 script = ExtResource("1_vasa2")
 
 [node name="Player" parent="." instance=ExtResource("1_l1rk1")]
-position = Vector2(570, 542)
+position = Vector2(7, -8)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 offset = Vector2(0, -200)
