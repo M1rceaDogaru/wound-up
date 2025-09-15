@@ -33,6 +33,7 @@ func _on_sentinel_trigger_body_entered(body: Node2D) -> void:
 		# start the boss battle
 		get_tree().current_scene.switch_to_boss()
 		get_viewport().get_camera_2d().set_new_parent($CameraHook, 0.38)
+		$SentinelDoor/AnimationPlayer.play("close")
 		$SentinelMoves.play("initiate")
 		$SentinelTrigger.queue_free()
 		

@@ -307,6 +307,10 @@ position = Vector2(-35, 187)
 target_location = "start"
 entry = 1
 
+[node name="ToClock" parent="Transitions" index="1" instance=ExtResource("2_rfm4c")]
+position = Vector2(3308, 194)
+target_location = "clock"
+
 [node name="Background" type="TileMapLayer" parent="Environment" index="0"]
 modulate = Color(0.423651, 0.423651, 0.423651, 1)
 z_index = -1
