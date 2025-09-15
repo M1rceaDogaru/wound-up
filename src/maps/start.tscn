@@ -82,3 +82,6 @@ libraries = {
 [node name="WalkingBot" parent="." index="4" instance=ExtResource("5_mjb1c")]
 position = Vector2(966, 570)
 health = 3
+
+[node name="BottomRight" parent="Limits" index="1"]
+position = Vector2(1334, 703)

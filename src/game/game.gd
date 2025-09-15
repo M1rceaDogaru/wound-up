@@ -15,4 +15,12 @@ func move_to(target: String, transition_name: String):
 	add_child(new_map)
 	
 	var target_transition: Transition = new_map.find_child("Transitions").find_child(transition_name)
+	var camera = get_viewport().get_camera_2d()
+	var top_left_limit: Node2D = new_map.find_child("TopLeft", true, false)
+	var bottom_right_limit: Node2D = new_map.find_child("BottomRight", true, false)
+	camera.limit_left = top_left_limit.global_position.x
+	camera.limit_top = top_left_limit.global_position.y
+	camera.limit_bottom = bottom_right_limit.global_position.y
+	camera.limit_right = bottom_right_limit.global_position.x
 	player.transition_to(target_transition.entry_point.global_position)
+	

@@ -9,3 +9,9 @@
 [node name="MovingPlatforms" type="Node2D" parent="."]
 
 [node name="PlatformMovement" type="AnimationPlayer" parent="."]
+
+[node name="Limits" type="Node2D" parent="."]
+
+[node name="TopLeft" type="Node2D" parent="Limits"]
+
+[node name="BottomRight" type="Node2D" parent="Limits"]

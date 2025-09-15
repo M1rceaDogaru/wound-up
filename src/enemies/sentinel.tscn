@@ -1,11 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://dcrah5vg0thhx"]
+[gd_scene load_steps=5 format=3 uid="uid://dcrah5vg0thhx"]
 
+[ext_resource type="Script" uid="uid://betwge6ctb0de" path="res://enemies/sentinel.gd" id="1_lekct"]
 [ext_resource type="Texture2D" uid="uid://b0xqtu3g3vn67" path="res://sprites/sentinel.png" id="1_o46ac"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lekct"]
 radius = 117.038
 
-[node name="Sentinel" type="Area2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o46ac"]
+size = Vector2(90, 32)
+
+[node name="Sentinel" type="Area2D" groups=["enemies"]]
+script = ExtResource("1_lekct")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-2, -201)
@@ -14,3 +19,9 @@ texture = ExtResource("1_o46ac")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -166)
 shape = SubResource("CircleShape2D_lekct")
+
+[node name="StompArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StompArea"]
+position = Vector2(-1, -309)
+shape = SubResource("RectangleShape2D_o46ac")

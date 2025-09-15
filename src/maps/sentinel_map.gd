@@ -27,6 +27,7 @@ func shake_camera():
 
 func _on_sentinel_trigger_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
+		# start the boss battle
 		get_viewport().get_camera_2d().set_new_parent($CameraHook, 0.3)
 		$SentinelMoves.play("initiate")
 		$SentinelTrigger.queue_free()
