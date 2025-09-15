@@ -22,6 +22,7 @@ RewindSystem="*res://player/rewind_system.gd"
 [global_group]
 
 player="The player"
+enemies=""
 
 [input]
 
@@ -58,3 +59,4 @@ rewind={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.925353, 0.925353, 0.925353, 1)

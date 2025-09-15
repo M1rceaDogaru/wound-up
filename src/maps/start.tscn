@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dxvpd37mhwkjm"]
+[gd_scene load_steps=9 format=3 uid="uid://dxvpd37mhwkjm"]
 
 [ext_resource type="PackedScene" uid="uid://bv1v81aa2q4gw" path="res://map/map.tscn" id="1_txpt3"]
 [ext_resource type="PackedScene" uid="uid://bin6wnaw5ta86" path="res://map/transition.tscn" id="2_u2sb3"]
 [ext_resource type="PackedScene" uid="uid://40nlohv2xows" path="res://test/platform.tscn" id="3_mjb1c"]
 [ext_resource type="PackedScene" uid="uid://ccv662yvydwpx" path="res://map/moving_platform.tscn" id="4_u2sb3"]
+[ext_resource type="PackedScene" uid="uid://c1txrvlq3wtq1" path="res://enemies/walking_bot.tscn" id="5_mjb1c"]
 
 [sub_resource type="Animation" id="Animation_mjb1c"]
 length = 0.001
@@ -77,3 +78,7 @@ position = Vector2(96, 536)
 libraries = {
 &"": SubResource("AnimationLibrary_vhhta")
 }
+
+[node name="WalkingBot" parent="." index="4" instance=ExtResource("5_mjb1c")]
+position = Vector2(966, 570)
+health = 3

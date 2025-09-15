@@ -147,6 +147,11 @@ func handle_movement(horizontal_input, delta):
 func apply_gravity(delta):
 	if not is_on_floor():
 		velocity.y += gravity * gravity_multiplier * delta
+		
+# Add this function to handle the stomp bounce
+func bounce_from_stomp(bounce_force: float):
+	# Immediately set vertical velocity to the bounce force
+	velocity.y = bounce_force * gravity_multiplier
 
 func perform_jump():
 	velocity.y = jump_velocity
@@ -237,6 +242,9 @@ func _on_rewind_ended():
 func transition_to(new_position: Vector2):
 	rewind_frames.clear()
 	global_position = new_position
+	var camera = get_viewport().get_camera_2d()
+	camera.global_position = new_position
+	camera.reset_smoothing()
 
 # Clean up when character is removed
 func _exit_tree():

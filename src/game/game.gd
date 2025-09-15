@@ -5,7 +5,7 @@ class_name Game
 @onready var player = $Player
 
 func _ready() -> void:
-	$Map/PlatformMovement.play("move")
+	pass
 
 func move_to(target: String, transition_name: String):
 	var current_map = find_child("Map", false, false)
@@ -16,4 +16,3 @@ func move_to(target: String, transition_name: String):
 	
 	var target_transition: Transition = new_map.find_child("Transitions").find_child(transition_name)
 	player.transition_to(target_transition.entry_point.global_position)
-	$Map/PlatformMovement.play("move")

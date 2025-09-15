@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://c1txrvlq3wtq1"]
+
+[ext_resource type="Script" uid="uid://c7lpxmecphec5" path="res://enemies/walking_bot.gd" id="1_f44cm"]
+[ext_resource type="Texture2D" uid="uid://w1geudsgrbg6" path="res://sprites/walking_robots.png" id="1_rgmjv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lai2c"]
+size = Vector2(97, 107)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rgmjv"]
+size = Vector2(49, 32)
+
+[node name="WalkingBot" type="Area2D" groups=["enemies"]]
+script = ExtResource("1_f44cm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -80)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_rgmjv")
+region_enabled = true
+region_rect = Rect2(442, 43.5, 169, 203)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.5, -54.5)
+shape = SubResource("RectangleShape2D_lai2c")
+
+[node name="StompArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StompArea"]
+position = Vector2(-0.5, -127)
+shape = SubResource("RectangleShape2D_rgmjv")

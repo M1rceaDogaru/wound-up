@@ -11,6 +11,7 @@ size = Vector2(77, 1475)
 
 [sub_resource type="Animation" id="Animation_asbfi"]
 resource_name = "initiate"
+length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -44,7 +45,7 @@ tracks/2/path = NodePath("SentinelWait")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.7),
+"times": PackedFloat32Array(1.73333),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [1.0],
@@ -270,7 +271,7 @@ scale = Vector2(0.717673, 32.9729)
 position = Vector2(3206, 1191)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SentinelTrigger" index="0"]
-position = Vector2(-812, -644)
+position = Vector2(-514, -630)
 shape = SubResource("RectangleShape2D_n13sd")
 
 [node name="Sentinel" parent="." index="5" instance=ExtResource("5_asbfi")]
@@ -283,6 +284,9 @@ one_shot = true
 libraries = {
 &"": SubResource("AnimationLibrary_oggui")
 }
+
+[node name="CameraHook" type="Node2D" parent="." index="8"]
+position = Vector2(2695, 957)
 
 [connection signal="body_entered" from="SentinelTrigger" to="." method="_on_sentinel_trigger_body_entered"]
 [connection signal="timeout" from="SentinelWait" to="." method="_on_sentinel_wait_timeout"]

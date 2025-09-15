@@ -6,6 +6,7 @@ var sentinel_is_left := true
 
 func attack_finished():
 	sentinel_is_left = !sentinel_is_left
+	$Sentinel/Sprite2D.flip_h = !sentinel_is_left
 	$SentinelWait.start(attack_cooldown)
 	
 func _on_sentinel_wait_timeout() -> void:
@@ -26,6 +27,7 @@ func shake_camera():
 
 func _on_sentinel_trigger_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
+		get_viewport().get_camera_2d().set_new_parent($CameraHook, 0.3)
 		$SentinelMoves.play("initiate")
 		$SentinelTrigger.queue_free()
 		
