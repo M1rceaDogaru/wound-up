@@ -74,9 +74,9 @@ _data = {
 position = Vector2(1133, -7)
 target_location = "tunnel"
 
-[node name="ToSentinel" parent="Transitions" index="1" instance=ExtResource("2_u2sb3")]
+[node name="ToGate" parent="Transitions" index="1" instance=ExtResource("2_u2sb3")]
 position = Vector2(-1448, -10)
-target_location = "sentinel"
+target_location = "gate"
 entry = 1
 
 [node name="Background" type="TileMapLayer" parent="Environment" index="0"]

@@ -370,7 +370,7 @@ script = ExtResource("2_asbfi")
 
 [node name="ToSentinel" parent="Transitions" index="0" instance=ExtResource("2_autn2")]
 position = Vector2(5064, 1280)
-target_location = "start"
+target_location = "gate"
 
 [node name="Background" type="TileMapLayer" parent="Environment" index="0"]
 modulate = Color(0.423651, 0.423651, 0.423651, 1)
