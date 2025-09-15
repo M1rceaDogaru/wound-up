@@ -43,7 +43,6 @@ var has_jump_buffer: bool = false
 @onready var coyote_timer = $CoyoteTimer
 @onready var jump_buffer_timer = $JumpBufferTimer
 @onready var sprite = $Sprite2D
-@onready var tension_label = $TensionLabel
 @onready var animation = $AnimationPlayer
 
 func _ready():
@@ -57,7 +56,6 @@ func _ready():
 	RewindSystem.rewind_ended.connect(_on_rewind_ended)
 
 func _physics_process(delta):
-	tension_label.text = str(int(spring_tension))
 	if RewindSystem.is_rewinding:
 		handle_rewind(delta)
 	else:

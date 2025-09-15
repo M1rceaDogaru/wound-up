@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dbodbao48jn7g"]
+[gd_scene load_steps=6 format=3 uid="uid://dbodbao48jn7g"]
 
 [ext_resource type="PackedScene" uid="uid://c0ftalwl0fy3s" path="res://player/player.tscn" id="1_l1rk1"]
 [ext_resource type="Script" uid="uid://do3wjgp6paoxf" path="res://game/game.gd" id="1_vasa2"]
 [ext_resource type="Script" uid="uid://cpol8bibjvnj0" path="res://game/camera.gd" id="3_4fuuu"]
 [ext_resource type="PackedScene" uid="uid://dxvpd37mhwkjm" path="res://maps/start.tscn" id="3_h7iqs"]
+[ext_resource type="PackedScene" uid="uid://7ayxn77gne60" path="res://ui/player.tscn" id="5_dxrkv"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_vasa2")
@@ -18,3 +19,7 @@ position_smoothing_enabled = true
 script = ExtResource("3_4fuuu")
 
 [node name="Map" parent="." instance=ExtResource("3_h7iqs")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PlayerUI" parent="CanvasLayer" instance=ExtResource("5_dxrkv")]
