@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://3whho7bo663p"]
+
+[ext_resource type="Script" uid="uid://britpuo5cj7mn" path="res://particles/dust.gd" id="1_ybbk6"]
+
+[node name="Dust" type="CPUParticles2D"]
+emitting = false
+lifetime = 0.8
+one_shot = true
+speed_scale = 3.0
+explosiveness = 0.88
+lifetime_randomness = 0.32
+local_coords = true
+direction = Vector2(-1, -0.4)
+spread = 30.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 181.82
+scale_amount_min = 5.0
+scale_amount_max = 8.0
+color = Color(0.807843, 0.682353, 0.490196, 1)
+script = ExtResource("1_ybbk6")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

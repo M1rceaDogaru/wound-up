@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://dqbp08kwhxyoe"]
+
+[ext_resource type="Script" uid="uid://ddriv6qhy7vmc" path="res://map/rewind_station.gd" id="1_ksrxa"]
+[ext_resource type="Texture2D" uid="uid://cv8n4werv6erc" path="res://sprites/rewind_station.png" id="1_yu2jv"]
+[ext_resource type="FontFile" uid="uid://du6i6ryxikr6w" path="res://Steam Punk Flyer.ttf" id="2_8onvv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8onvv"]
+size = Vector2(180, 136)
+
+[node name="RewindStation" type="Area2D"]
+z_index = -1
+script = ExtResource("1_ksrxa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -68)
+shape = SubResource("RectangleShape2D_8onvv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -68)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_yu2jv")
+
+[node name="Hint" type="RichTextLabel" parent="."]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -177.0
+offset_top = -292.0
+offset_right = 182.0
+offset_bottom = -186.0
+grow_horizontal = 2
+theme_override_colors/default_color = Color(0.807843, 0.682353, 0.490196, 1)
+theme_override_fonts/normal_font = ExtResource("2_8onvv")
+theme_override_font_sizes/normal_font_size = 24
+text = "Press F to rewind your spring
+Press O to overwind!"
+scroll_active = false
+horizontal_alignment = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

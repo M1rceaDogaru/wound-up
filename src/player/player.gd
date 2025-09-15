@@ -12,13 +12,14 @@ extends CharacterBody2D
 @export var jump_buffer_time: float = 0.1
 
 @export var gravity_multiplier: float = 3
+@export var overwound_speed_multiplier = 2.0
 
 @export_group("Damage and health")
 # Spring Tension Properties
 @export var max_spring_tension: float = 100.0
 @export var spring_depletion_rate: float = 5.0 # Tension lost per second
 @export var damage_depletion_amount: float = 25.0
-@export var overwound_depletion_multiplier: float = 2.0
+@export var overwound_depletion_multiplier: float = 1.5
 
 # Rewind system Properties
 @export var rewind_cooldown := 2.0
@@ -32,7 +33,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 # State Variables
 var spring_tension: float
-var is_overwound: bool = false
+@export var is_overwound: bool = false
 var was_on_floor: bool = false
 
 # Quality of Life Variables
@@ -44,6 +45,8 @@ var has_jump_buffer: bool = false
 @onready var jump_buffer_timer = $JumpBufferTimer
 @onready var sprite = $Sprite2D
 @onready var animation = $AnimationPlayer
+
+@onready var dust = preload("res://particles/dust.tscn")
 
 func _ready():
 	spring_tension = max_spring_tension
@@ -95,6 +98,12 @@ func handle_normal_movement(delta):
 	if Input.is_action_just_pressed("rewind") and can_rewind:
 		start_rewind()
 		
+	if (Input.is_action_just_pressed("move_left") or Input.is_action_just_pressed("move_right")) and is_on_floor():
+		print("DUST!")
+		var dust_instance: CPUParticles2D = dust.instantiate()
+		dust_instance.direction.x = -1 if horizontal_input < 0 else 1
+		add_child(dust_instance)
+		
 func deplete_spring_tension(delta, move_input, has_jumped):
 	if has_jumped:
 		spring_tension -= 1
@@ -131,6 +140,8 @@ func handle_movement(horizontal_input, delta):
 	if horizontal_input != 0:
 		# Apply acceleration
 		var target_speed = horizontal_input * max_speed
+		if is_overwound:
+			target_speed *= overwound_speed_multiplier
 		
 		velocity.x = move_toward(velocity.x, target_speed, acceleration * delta)
 		
@@ -166,11 +177,6 @@ func perform_jump():
 func take_damage():
 	spring_tension -= damage_depletion_amount
 	# Add knockback, invulnerability frames, etc. here later
-
-func rewind_at_station():
-	spring_tension = max_spring_tension
-	is_overwound = false # Reset overwound state when safely rewound
-	# Play sound effect, maybe particles
 
 func game_over(reason: String):
 	print("Game Over: ", reason)
@@ -247,6 +253,10 @@ func transition_to(new_position: Vector2):
 	var camera = get_viewport().get_camera_2d()
 	camera.global_position = new_position
 	camera.reset_smoothing()
+	
+func spring_rewind(overwind):
+	spring_tension = max_spring_tension
+	is_overwound = overwind
 
 # Clean up when character is removed
 func _exit_tree():
