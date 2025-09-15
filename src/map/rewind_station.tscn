@@ -22,6 +22,7 @@ texture = ExtResource("1_yu2jv")
 
 [node name="Hint" type="RichTextLabel" parent="."]
 visible = false
+z_index = 10
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5

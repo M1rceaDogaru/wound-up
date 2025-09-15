@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=4 uid="uid://bfj4c1tyln6a1"]
+[gd_scene load_steps=17 format=4 uid="uid://bfj4c1tyln6a1"]
 
 [ext_resource type="PackedScene" uid="uid://bv1v81aa2q4gw" path="res://map/map.tscn" id="1_e3u6v"]
 [ext_resource type="Script" uid="uid://dvrm3wi684owy" path="res://maps/sentinel_map.gd" id="2_asbfi"]
 [ext_resource type="PackedScene" uid="uid://bin6wnaw5ta86" path="res://map/transition.tscn" id="2_autn2"]
 [ext_resource type="PackedScene" uid="uid://dcrah5vg0thhx" path="res://enemies/sentinel.tscn" id="5_asbfi"]
 [ext_resource type="Texture2D" uid="uid://bska4m407gjfw" path="res://sprites/background1.png" id="5_n13sd"]
+[ext_resource type="PackedScene" uid="uid://dqbp08kwhxyoe" path="res://map/rewind_station.tscn" id="6_n13sd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oggui"]
 texture = ExtResource("5_n13sd")
@@ -372,6 +373,9 @@ position = Vector2(464, 64)
 
 [node name="BottomRight" parent="Limits" index="1"]
 position = Vector2(5154, 1690)
+
+[node name="RewindStation" parent="." index="10" instance=ExtResource("6_n13sd")]
+position = Vector2(4581, 1281)
 
 [connection signal="body_entered" from="SentinelTrigger" to="." method="_on_sentinel_trigger_body_entered"]
 [connection signal="timeout" from="SentinelWait" to="." method="_on_sentinel_wait_timeout"]

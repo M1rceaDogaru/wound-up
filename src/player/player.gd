@@ -20,6 +20,7 @@ extends CharacterBody2D
 @export var spring_depletion_rate: float = 5.0 # Tension lost per second
 @export var damage_depletion_amount: float = 25.0
 @export var overwound_depletion_multiplier: float = 1.5
+@export var knockback_force: float = 1500
 
 # Rewind system Properties
 @export var rewind_cooldown := 2.0
@@ -39,6 +40,9 @@ var was_on_floor: bool = false
 # Quality of Life Variables
 var can_coyote_jump: bool = false
 var has_jump_buffer: bool = false
+
+var invulnerability_tween: Tween
+var is_invulnerable = false
 
 # Node References
 @onready var coyote_timer = $CoyoteTimer
@@ -174,9 +178,15 @@ func perform_jump():
 	jump_buffer_timer.stop()
 	# Play jump sound effect here later
 
-func take_damage():
+func take_damage(from_position: Vector2):
+	if is_invulnerable:
+		return
+	
 	spring_tension -= damage_depletion_amount
-	# Add knockback, invulnerability frames, etc. here later
+	var knockback_direction = (global_position - from_position).normalized()
+	# Apply the knockback force vector
+	velocity = Vector2(knockback_direction * knockback_force)
+	start_invulnerability()
 
 func game_over(reason: String):
 	print("Game Over: ", reason)
@@ -263,9 +273,28 @@ func _exit_tree():
 	if RewindSystem.is_rewinding:
 		RewindSystem.stop_rewind()
 
+# --- Invulnerability ---
+func start_invulnerability():
+	is_invulnerable = true
+	$InvulnerabilityTimer.start()
+	
+	# Create a blinking effect by modulating the sprite's alpha
+	invulnerability_tween = create_tween()
+	invulnerability_tween.set_loops() # Loop until manually killed
+	invulnerability_tween.tween_property(sprite, "modulate:a", 0.3, 0.1) # Fade out
+	invulnerability_tween.tween_property(sprite, "modulate:a", 1.0, 0.1) # Fade in
+	# This tween will loop until we kill it in _on_invulnerability_timer_timeout
+
 # --- TIMER SIGNAL CALLBACKS ---
 func _on_coyote_timer_timeout():
 	can_coyote_jump = false
 
 func _on_jump_buffer_timer_timeout():
 	has_jump_buffer = false
+
+func _on_invulnerability_timer_timeout() -> void:
+	if invulnerability_tween:
+		$Sprite2D.modulate.a = 1.0
+		invulnerability_tween.kill()
+		invulnerability_tween = null
+		is_invulnerable = false
