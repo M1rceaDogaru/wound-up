@@ -7,7 +7,7 @@
 size = Vector2(97, 107)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rgmjv"]
-size = Vector2(49, 32)
+size = Vector2(75, 32)
 
 [node name="WalkingBot" type="Area2D" groups=["enemies"]]
 script = ExtResource("1_f44cm")
@@ -26,7 +26,10 @@ shape = SubResource("RectangleShape2D_lai2c")
 [node name="StompArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StompArea"]
-position = Vector2(-0.5, -127)
+position = Vector2(-1.5, -127)
 shape = SubResource("RectangleShape2D_rgmjv")
 
+[node name="InvulnerabilityTimer" type="Timer" parent="."]
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="InvulnerabilityTimer" to="." method="_on_invulnerability_timer_timeout"]
