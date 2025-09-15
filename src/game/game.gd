@@ -10,6 +10,9 @@ var music_tween: Tween
 
 var original_pitch: float
 
+# game state variables
+var tunnel_door_open := false
+
 func _ready() -> void:
 	move_to("start")
 
@@ -59,5 +62,5 @@ func reset_music():
 	exploration_music.play()
 	
 func time_rewinding(value):
-	exploration_music.pitch_scale = 0.5 if value else 1
-	boss_music.pitch_scale = 0.5 if value else 1
+	exploration_music.pitch_scale = 0.5 if value else 1.0
+	boss_music.pitch_scale = 0.5 if value else 1.0

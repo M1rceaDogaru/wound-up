@@ -8,6 +8,7 @@ var player
 
 @onready var spring_tension = $SpringTension
 @onready var original_position = $SpringTension.position
+@onready var rewind_label = $RewindLabel
 
 func _ready() -> void:
 	player = get_tree().get_nodes_in_group("player")[0]
@@ -20,3 +21,5 @@ func _physics_process(delta: float) -> void:
 	else:
 		spring_tension.position = original_position
 		spring_tension.theme = standard_theme
+		
+	rewind_label.visible = player.has_rewind_ability

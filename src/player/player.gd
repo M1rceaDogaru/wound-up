@@ -23,6 +23,7 @@ extends CharacterBody2D
 @export var knockback_force: float = 1500
 
 # Rewind system Properties
+@export var has_rewind_ability := false
 @export var rewind_cooldown := 2.0
 var can_rewind := true
 var rewind_timer := 0.0
@@ -107,7 +108,7 @@ func handle_normal_movement(delta):
 	move_and_slide()
 	
 	# Handle rewind input
-	if Input.is_action_just_pressed("rewind") and can_rewind:
+	if Input.is_action_just_pressed("rewind") and has_rewind_ability and can_rewind:
 		start_rewind()
 		
 	if (Input.is_action_just_pressed("move_left") or Input.is_action_just_pressed("move_right")) and is_on_floor():
