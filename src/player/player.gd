@@ -42,7 +42,8 @@ var can_coyote_jump: bool = false
 var has_jump_buffer: bool = false
 
 var invulnerability_tween: Tween
-var is_invulnerable = false
+var is_invulnerable := false
+var is_dead := false
 
 # Node References
 @onready var coyote_timer = $CoyoteTimer
@@ -52,6 +53,8 @@ var is_invulnerable = false
 
 @onready var dust = preload("res://particles/dust.tscn")
 
+var camera: Camera2D
+
 func _ready():
 	spring_tension = max_spring_tension
 	coyote_timer.connect("timeout", _on_coyote_timer_timeout)
@@ -59,10 +62,15 @@ func _ready():
 	jump_buffer_timer.connect("timeout", _on_jump_buffer_timer_timeout)
 	jump_buffer_timer.wait_time = jump_buffer_time
 	
+	camera = get_viewport().get_camera_2d()
+	
 	RewindSystem.rewind_started.connect(_on_rewind_started)
 	RewindSystem.rewind_ended.connect(_on_rewind_ended)
 
 func _physics_process(delta):
+	if is_dead:
+		return
+		
 	if RewindSystem.is_rewinding:
 		handle_rewind(delta)
 	else:
@@ -187,10 +195,30 @@ func take_damage(from_position: Vector2):
 	velocity = Vector2(knockback_direction * knockback_force)
 	start_invulnerability()
 
+@onready var explosion = preload("res://particles/explosion.tscn")
 func game_over(reason: String):
 	print("Game Over: ", reason)
-	# This will be replaced by a game over screen restart
-	get_tree().reload_current_scene()
+	is_dead = true
+	for i in range(10):
+		create_explosion($CollisionShape2D)
+		await get_tree().create_timer(0.3).timeout
+	await get_tree().create_timer(0.5).timeout
+	reset_player()
+	get_tree().current_scene.move_to(last_rewind_station_map, "", last_rewind_station_position)
+
+func create_explosion(source):
+	var new_explosion = explosion.instantiate()
+	new_explosion.global_position = source.global_position
+	get_tree().current_scene.add_child(new_explosion)
+
+func reset_player():
+	get_tree().current_scene.reset_music()
+	camera.set_new_parent(self, 0.5)
+	velocity = Vector2.ZERO
+	rewind_frames.clear()
+	spring_tension = max_spring_tension
+	is_overwound = false
+	is_dead = false
 	
 # --- TIME REWIND LOGIC ---
 func store_rewind_frame():
@@ -259,16 +287,18 @@ func _on_rewind_ended():
 func transition_to(new_position: Vector2):
 	rewind_frames.clear()
 	global_position = new_position
-	var camera = get_viewport().get_camera_2d()
 	camera.global_position = new_position
 	camera.reset_smoothing()
 
 var last_rewind_station_map := ""
+var last_rewind_station_position := Vector2.ZERO
 
-func spring_rewind(overwind):
+func spring_rewind(location: String, station_position: Vector2, overwind: bool):
 	spring_tension = max_spring_tension
 	is_overwound = overwind
-	get_tree().current_scene.exploration_music.pitch_scale = 2.0 if overwind else 1.0
+	last_rewind_station_map = location
+	last_rewind_station_position = station_position
+	get_tree().current_scene.set_music_speed(2.0 if overwind else 1.0)
 
 # Clean up when character is removed
 func _exit_tree():

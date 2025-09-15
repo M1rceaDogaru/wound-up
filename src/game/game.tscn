@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dbodbao48jn7g"]
+[gd_scene load_steps=8 format=3 uid="uid://dbodbao48jn7g"]
 
 [ext_resource type="PackedScene" uid="uid://c0ftalwl0fy3s" path="res://player/player.tscn" id="1_l1rk1"]
 [ext_resource type="Script" uid="uid://do3wjgp6paoxf" path="res://game/game.gd" id="1_vasa2"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dxvpd37mhwkjm" path="res://maps/start.tscn" id="3_h7iqs"]
 [ext_resource type="PackedScene" uid="uid://7ayxn77gne60" path="res://ui/player.tscn" id="5_dxrkv"]
 [ext_resource type="AudioStream" uid="uid://cj188jn5f4xpi" path="res://music/steampunk_exploration.mp3" id="6_dakft"]
+[ext_resource type="AudioStream" uid="uid://ccfvyhs8g1jit" path="res://music/steampunk_combat_faster.mp3" id="7_u5opy"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_vasa2")
@@ -28,4 +29,8 @@ script = ExtResource("3_4fuuu")
 [node name="ExplorationMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_dakft")
 autoplay = true
+parameters/looping = true
+
+[node name="BossMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_u5opy")
 parameters/looping = true
