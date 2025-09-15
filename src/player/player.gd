@@ -262,10 +262,13 @@ func transition_to(new_position: Vector2):
 	var camera = get_viewport().get_camera_2d()
 	camera.global_position = new_position
 	camera.reset_smoothing()
-	
+
+var last_rewind_station_map := ""
+
 func spring_rewind(overwind):
 	spring_tension = max_spring_tension
 	is_overwound = overwind
+	get_tree().current_scene.exploration_music.pitch_scale = 2.0 if overwind else 1.0
 
 # Clean up when character is removed
 func _exit_tree():

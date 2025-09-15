@@ -10,6 +10,8 @@ extends Area2D
 var invulnerability_tween: Tween
 var is_invulnerable = false
 
+signal sentinel_died
+
 func _ready():
 	# Connect the area's signal to a function
 	stomp_area.body_entered.connect(_on_stomp_area_body_entered)
@@ -25,7 +27,14 @@ func take_damage(source):
 		die()
 
 func die():
-	# Play death animation, sound, spawn particles, then queue_free
+	$InvulnerabilityTimer.queue_free()
+	is_invulnerable = true
+	sentinel_died.emit()
+	for i in range(10):
+		create_explosion($StompArea/CollisionShape2D)
+		await get_tree().create_timer(0.3).timeout
+	
+	await get_tree().create_timer(0.5).timeout 
 	queue_free()
 
 func _on_stomp_area_body_entered(body):
