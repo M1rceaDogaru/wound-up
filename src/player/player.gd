@@ -103,9 +103,8 @@ func handle_normal_movement(delta):
 		start_rewind()
 		
 	if (Input.is_action_just_pressed("move_left") or Input.is_action_just_pressed("move_right")) and is_on_floor():
-		print("DUST!")
 		var dust_instance: CPUParticles2D = dust.instantiate()
-		dust_instance.direction.x = -1 if horizontal_input < 0 else 1
+		dust_instance.direction.x = 1 if horizontal_input < 0 else -1
 		add_child(dust_instance)
 		
 func deplete_spring_tension(delta, move_input, has_jumped):

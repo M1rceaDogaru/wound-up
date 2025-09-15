@@ -5,6 +5,7 @@ extends Area2D
 
 @onready var stomp_area = $StompArea
 @onready var sprite = $Sprite2D
+@onready var explosion = preload("res://particles/explosion.tscn")
 
 var invulnerability_tween: Tween
 var is_invulnerable = false
@@ -17,6 +18,7 @@ func take_damage(source):
 	if is_invulnerable:
 		return
 	
+	create_explosion(source)
 	start_invulnerability()
 	health -= 1
 	if health <= 0:
@@ -58,3 +60,8 @@ func _on_invulnerability_timer_timeout() -> void:
 		invulnerability_tween.kill()
 		invulnerability_tween = null
 		is_invulnerable = false
+		
+func create_explosion(source):
+	var new_explosion = explosion.instantiate()
+	new_explosion.global_position = source.global_position
+	get_tree().current_scene.add_child(new_explosion)
