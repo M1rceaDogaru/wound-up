@@ -25,4 +25,5 @@ func trigger_shake(amount: float):
 func set_new_parent(parent: Node2D, new_zoom: float):
 	reparent(parent)
 	var tween = create_tween()
-	tween.tween_property(self, "zoom", Vector2(new_zoom, new_zoom), 0.5)
+	tween.parallel().tween_property(self, "position", Vector2.ZERO, 0.5)
+	tween.parallel().tween_property(self, "zoom", Vector2(new_zoom, new_zoom), 0.5)

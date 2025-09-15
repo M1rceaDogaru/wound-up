@@ -44,6 +44,7 @@ var has_jump_buffer: bool = false
 @onready var jump_buffer_timer = $JumpBufferTimer
 @onready var sprite = $Sprite2D
 @onready var tension_label = $TensionLabel
+@onready var animation = $AnimationPlayer
 
 func _ready():
 	spring_tension = max_spring_tension
@@ -137,12 +138,15 @@ func handle_movement(horizontal_input, delta):
 		
 		# Flip sprite to face direction of movement
 		if horizontal_input > 0:
-			$Sprite2D.flip_h = false
+			sprite.flip_h = false
 		elif horizontal_input < 0:
-			$Sprite2D.flip_h = true
+			sprite.flip_h = true
+			
+		animation.play("move")
 	else:
 		# Apply friction when no input
 		velocity.x = move_toward(velocity.x, 0, friction * delta)
+		animation.stop()
 
 func apply_gravity(delta):
 	if not is_on_floor():
