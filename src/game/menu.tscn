@@ -86,6 +86,7 @@ text = "WOUND UP"
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_jk0wg")
 autoplay = true
+parameters/looping = true
 
 [node name="Play" type="Button" parent="."]
 offset_left = 486.0
