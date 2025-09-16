@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="Wound Up"
-run/main_scene="uid://dbodbao48jn7g"
+run/main_scene="uid://dlpnr4iji5fsf"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 RewindSystem="*res://player/rewind_system.gd"
+Stats="*res://game/stats.gd"
 
 [display]
 

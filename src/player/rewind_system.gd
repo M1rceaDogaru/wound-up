@@ -12,6 +12,7 @@ func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS  # Work even when paused
 
 func start_rewind():
+	Stats.rewinds += 1
 	is_rewinding = true
 	rewind_started.emit()
 

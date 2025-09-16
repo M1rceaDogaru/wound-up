@@ -14,8 +14,10 @@ var original_pitch: float
 var tunnel_door_open := false
 
 func _ready() -> void:
+	Stats.start()
 	move_to("start")
 	#move_to("clock", "ToClock")
+	#move_to("sentinel", "", Vector2(4581, 1281))
 
 func move_to(target: String, transition_name: String = "", new_position: Vector2 = Vector2.ZERO):
 	var current_map = find_child("Map", false, false)

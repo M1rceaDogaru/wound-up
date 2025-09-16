@@ -179,6 +179,7 @@ func bounce_from_stomp(bounce_force: float):
 	velocity.y = bounce_force * gravity_multiplier
 
 func perform_jump():
+	Stats.jumps += 1
 	velocity.y = jump_velocity
 	can_coyote_jump = false
 	has_jump_buffer = false
@@ -198,7 +199,7 @@ func take_damage(from_position: Vector2):
 
 @onready var explosion = preload("res://particles/explosion.tscn")
 func game_over(reason: String):
-	print("Game Over: ", reason)
+	Stats.deaths += 1
 	is_dead = true
 	for i in range(10):
 		create_explosion($CollisionShape2D)

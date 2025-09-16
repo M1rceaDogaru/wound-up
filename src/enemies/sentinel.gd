@@ -34,8 +34,11 @@ func die():
 		create_explosion($StompArea/CollisionShape2D)
 		await get_tree().create_timer(0.3).timeout
 	
-	await get_tree().create_timer(0.5).timeout 
-	queue_free()
+	await get_tree().create_timer(1.0).timeout
+	
+	# this should not be here but I don't care anymore
+	Stats.end_game()
+	get_tree().change_scene_to_file("res://game/end.tscn")
 
 func _on_stomp_area_body_entered(body):
 	# Check if the body that entered the area is the player
